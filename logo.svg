@@ -1,0 +1,37 @@
+<!-- Language Cards — horizontal logo with cards #b2eac1 and letters/text #003e29 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 120" width="480" height="120" role="img" aria-labelledby="lcTitle lcDesc">
+  <title id="lcTitle">Language Cards</title>
+  <desc id="lcDesc">Minimal abstract logo for Language Cards with multilingual letters A, ü, あ, cards #b2eac1, letters/text #003e29.</desc>
+
+  <defs>
+    <style>
+      .lc-accent { fill: #b2eac1; }      /* основной цвет карточки */
+      .lc-accent2 { fill: #9ae5a7; }     /* задняя карточка */
+      .lc-text { fill: #003e29; font-family: "Inter", "Segoe UI", Roboto, system-ui, sans-serif; font-weight: 700; font-size: 40px; letter-spacing: 0.6px; }
+      .lc-letter { fill: #003e29; font-family: "Noto Sans", "Segoe UI", sans-serif; font-weight: 700; font-size: 22px; opacity: 0.85; }
+    </style>
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feOffset dy="2" in="SourceAlpha" result="off"/>
+      <feGaussianBlur in="off" stdDeviation="3" result="blur"/>
+      <feColorMatrix in="blur" type="matrix"
+        values="0 0 0 0 0
+                0 0 0 0 0
+                0 0 0 0 0
+                0 0 0 0.12" result="shadow"/>
+      <feBlend in="SourceGraphic" in2="shadow" mode="normal"/>
+    </filter>
+  </defs>
+
+  <g transform="translate(28,16)" filter="url(#shadow)">
+    <rect x="6" y="8" width="72" height="64" rx="10" ry="10" class="lc-accent2" transform="rotate(-8 42 40)"/>
+    <rect x="0" y="0" width="72" height="64" rx="10" ry="10" class="lc-accent"/>
+    
+    <!-- буквы на карточках -->
+    <text x="18" y="28" class="lc-letter" style="font-size:22px;">A</text>
+    <text x="31" y="46" class="lc-letter" style="font-size:24px;">ü</text>
+    <text x="47" y="34" class="lc-letter" style="font-size:20px;">あ</text>
+  </g>
+
+  <!-- надпись -->
+  <text x="132" y="72" class="lc-text">Language Cards</text>
+</svg>

@@ -1,0 +1,36 @@
+.title {
+  display: flex;
+  font-weight: 600;
+  font-size: 48px;
+  max-width: 400px;
+  min-width: 400px;
+  margin-bottom: 0;
+}
+
+.title__invite {
+  display: flex;
+  font-weight: 400;
+  font-size: 25px;
+  min-width: 500px;
+}
+
+.title__invite-auth {
+  display: flex;
+  font-weight: 600;
+  font-size: 35px;
+  min-width: 400px;
+}
+
+@media (max-width: 950px) {
+  .title__invite {
+    font-size: 15px;
+  }
+
+  .title__invite-auth {
+    font-size: 23px;
+  }
+
+  .title {
+    font-size: 38px;
+  }
+}
