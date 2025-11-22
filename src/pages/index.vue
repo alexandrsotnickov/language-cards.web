@@ -12,7 +12,10 @@ export default {
       <div class="title__invite">
         Начни пополнять свой словарный запас уже сейчас!
       </div>
-      <div class="title__invite-auth">Входи, регистрируйся!</div>
+      <div v-if="auth.userName" class="title__invite-auth">
+        Выбери тему и начинай изучение!
+      </div>
+      <div v-else class="title__invite-auth">Входи, регистрируйся!</div>
     </section>
   </main>
 </template>
@@ -27,4 +30,7 @@ export default {
 
 <script setup>
 import { TheHeader } from "@/widgets/header";
+import { useAuthStore } from "~/src/shared/api/stores/useAuthStore";
+
+const auth = useAuthStore();
 </script>

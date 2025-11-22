@@ -6,24 +6,31 @@
           <a href="/" class="header__logo" aria-label="LanguageCards"
             ><Logo
           /></a>
-          <ul class="header__menu">
+          <ul v-if="auth.userName" class="header__menu">
             <li class="header__menu-item">
               <NuxtLink to="">Мои темы</NuxtLink>
             </li>
             <li class="header__menu-item">
-              <NuxtLink to="">Поиск тем</NuxtLink>
+              <NuxtLink to="/themes-search">Поиск тем</NuxtLink>
             </li>
           </ul>
         </div>
         <div class="header__account">
-          <ul class="header__menu">
+          <ul v-if="!auth.userName" class="header__menu">
             <li class="header__menu-item">
-              <NuxtLink to="">Войти</NuxtLink>
+              <NuxtLink to="/login">Войти</NuxtLink>
             </li>
             <li class="header__menu-item">
               <NuxtLink to="/registration">Регистрация</NuxtLink>
             </li>
           </ul>
+          <div v-if="auth.userName" class="header__menu">
+            <span class="user-bar__name">
+              Пользователь: <br />
+              {{ auth.userName }}
+            </span>
+            <button class="header__logout-button" @click="logout">Выйти</button>
+          </div>
         </div>
       </nav>
       <div class="header__mobile">
@@ -50,9 +57,9 @@
           <div class="burger__content">
             <div class="burger__menu">
               <p><NuxtLink to="/cases">Мои темы</NuxtLink></p>
-              <p><NuxtLink to="/cases">Поиск тем</NuxtLink></p>
-              <p><NuxtLink to="/cases">Войти</NuxtLink></p>
-              <p><NuxtLink to="/cases">Регистрация</NuxtLink></p>
+              <p><NuxtLink to="/themes-search">Поиск тем</NuxtLink></p>
+              <p><NuxtLink to="/login">Войти</NuxtLink></p>
+              <p><NuxtLink to="/registration">Регистрация</NuxtLink></p>
             </div>
 
             <hr />
@@ -76,6 +83,15 @@
 <script setup>
 import Logo from "@/shared/ui/Logo/TheLogo.vue";
 import { ref } from "vue";
+import { useAuthStore } from "~/src/shared/api/stores/useAuthStore";
+import { navigateTo } from "#app";
+
+const auth = useAuthStore();
+
+const logout = () => {
+  auth.logout();
+  navigateTo("/login");
+};
 
 const isActive = ref(false);
 

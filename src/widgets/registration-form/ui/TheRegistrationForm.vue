@@ -1,64 +1,60 @@
 <template>
-  <artcile>
+  <article>
     <div class="registration-form">
       <h2 class="registration-form__title">Регистрация</h2>
-      <form novalidate class="form" method="post">
+      <form novalidate class="form" method="post" @submit.prevent="onSubmit">
         <div class="registration-form__group">
           <label class="registration-form__label">Придумайте никнейм:*</label>
-          <input class="registration-form__input" type="text" />
+          <input
+            class="registration-form__input"
+            type="text"
+            v-model="form.username"
+            username="username"
+            required
+          />
           <label class="registration-form__label">Придумайте пароль*</label>
-          <input class="registration-form__input" type="text" />
+          <input
+            class="registration-form__input"
+            type="text"
+            v-model="form.password"
+            password="password"
+            required
+          />
           <button class="registration-form__button" type="submit">
             Зарегистрироваться
           </button>
         </div>
       </form>
+      <p v-if="!response?.success" class="registration-form__error">
+        {{ response?.validationError }}
+      </p>
+      <p v-if="response?.success">
+        {{ response?.message }}
+      </p>
     </div>
-  </artcile>
+  </article>
 </template>
 
 <script setup lang="ts">
-// import { ref } from "vue";
-// import { validateFeedbackForm } from '@/shared/models/validation'
-// import { useFeedback } from '@/widgets/feedback-form/api/useFeedback'
+import { useRegistration } from "~/src/shared/api/useRegistration";
+import { ref } from "vue";
 
-// const form = ref({
-//   name: '',
-//   message: '',
-//   phone: '',
-//   email: '',
-//   agree: false
-// })
+const form = ref({
+  username: "",
+  password: "",
+});
 
-// const frontErrors = ref<Record<string, string>>({})
-// const {
-//   successMessage,
-//   loading,
-//   isSuccessResponse,
-//   error,
-//   validationErrors,
-//   submit
-// } = useFeedback()
+const { response, submit } = useRegistration();
+async function onSubmit() {
+  await submit(form.value);
 
-// async function onSubmit() {
-//   const errors = validateFeedbackForm(form.value)
-//   frontErrors.value = errors
-//   if (Object.keys(errors).length > 0) {
-//     isSuccessResponse.value = false
-//     return
-//   }
-
-//   await submit(form.value)
-//   if (isSuccessResponse.value) {
-//     form.value = {
-//       name: '',
-//       message: '',
-//       phone: '',
-//       email: '',
-//       agree: false
-//     }
-//   }
-// }
+  if (response.value != null && response.value.success) {
+    form.value = {
+      username: "",
+      password: "",
+    };
+  }
+}
 </script>
 
 <style lang="scss">
