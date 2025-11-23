@@ -30,7 +30,7 @@ export default {
 
 <script setup>
 import { TheHeader } from "@/widgets/header";
-import { useAuthStore } from "~/src/shared/api/stores/useAuthStore";
+import { useAuthStore } from "@/shared/api/stores/useAuthStore";
 
 const auth = useAuthStore();
 </script>

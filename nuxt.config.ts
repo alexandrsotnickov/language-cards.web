@@ -30,6 +30,6 @@ export default defineNuxtConfig({
   },
 
   css: ["@/app/styles/base.scss"],
-
+  plugins: ["@/shared/lib/auth.client.ts"],
   modules: ["@pinia/nuxt"],
 });
