@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import type { User } from "@/entities/user/user";
-import { apiUrl } from "@/app/apiUrl";
+import { apiUrl } from "~/src/shared/lib/apiUrl";
 import type { LoginResponse } from "@/dto/loginResponse";
 import type { FetchError } from "ofetch";
 import type { ApiResponse } from "@/dto/apiResponse";

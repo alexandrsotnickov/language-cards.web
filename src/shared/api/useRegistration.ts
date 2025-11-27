@@ -1,6 +1,6 @@
 import { ref } from "vue";
 import type { User } from "@/entities/user/user";
-import { apiUrl } from "@/app/apiUrl";
+import { apiUrl } from "~/src/shared/lib/apiUrl";
 import type { FetchError } from "ofetch";
 import type { ApiResponse } from "@/dto/apiResponse";
 

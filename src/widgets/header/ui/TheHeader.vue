@@ -8,7 +8,7 @@
           /></a>
           <ul v-if="auth.userName" class="header__menu">
             <li class="header__menu-item">
-              <NuxtLink to="">Мои темы</NuxtLink>
+              <NuxtLink to="/my-themes">Мои темы</NuxtLink>
             </li>
             <li class="header__menu-item">
               <NuxtLink to="/themes-search">Поиск тем</NuxtLink>
@@ -29,7 +29,7 @@
               Пользователь: <br />
               {{ auth.userName }}
             </span>
-            <button class="header__logout-button" @click="logout">Выйти</button>
+            <TheButton @click="logout"> Выйти </TheButton>
           </div>
         </div>
       </nav>
@@ -56,7 +56,7 @@
           </button>
           <div class="burger__content">
             <div class="burger__menu">
-              <p><NuxtLink to="/cases">Мои темы</NuxtLink></p>
+              <p><NuxtLink to="/my-themes">Мои темы</NuxtLink></p>
               <p><NuxtLink to="/themes-search">Поиск тем</NuxtLink></p>
               <p><NuxtLink to="/login">Войти</NuxtLink></p>
               <p><NuxtLink to="/registration">Регистрация</NuxtLink></p>
@@ -85,6 +85,7 @@ import Logo from "@/shared/ui/Logo/TheLogo.vue";
 import { ref } from "vue";
 import { useAuthStore } from "~/src/shared/api/stores/useAuthStore";
 import { navigateTo } from "#app";
+import TheButton from "@/shared/ui/button/TheButton.vue";
 
 const auth = useAuthStore();
 

@@ -1,0 +1,23 @@
+.theme-creation__title {
+  font-size: 45px;
+}
+
+.theme-creation__form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 400px;
+}
+
+.theme-creation__label {
+  font-size: 25px;
+}
+
+.theme-creation__input {
+  height: 25px;
+  border-radius: 6px;
+}
+
+.theme-creation__button {
+  max-width: 150px;
+}
