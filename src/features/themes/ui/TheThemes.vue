@@ -20,7 +20,7 @@ import { TheButton } from "@/shared/ui/button";
 const themesStore = useThemesStore();
 
 onMounted(() => {
-  themesStore.getThemes();
+  themesStore.getAllThemes();
 });
 </script>
 

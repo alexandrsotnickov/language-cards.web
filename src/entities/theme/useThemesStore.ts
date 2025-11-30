@@ -12,6 +12,7 @@ export const useThemesStore = defineStore("themesStore", {
   actions: {
     async getAllThemes() {
       const token = localStorage.getItem("accessToken");
+
       try {
         const res = await $fetch<Theme[]>(`${apiUrl}/themes`, {
           method: "GET",
@@ -32,19 +33,51 @@ export const useThemesStore = defineStore("themesStore", {
         }
       }
     },
-    async getSubscribedThemes(){
+
+    async getSubscribedThemes() {
       const token = localStorage.getItem("accessToken");
-      try{
-        const res = await $fetch<Theme[]>(`${apiUrl}/users/themes`,{
+
+      try {
+        const res = await $fetch<Theme[]>(`${apiUrl}/users/themes`, {
           method: "GET",
-           headers: {
+          headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        
-      }
-      catch(err: unknown){
 
-    }
+        this.items = res ?? [];
+      } catch (err: unknown) {
+        const error = err as FetchError;
+
+        if (error.status === 401) {
+          const auth = useAuthStore();
+          auth.logout();
+
+          navigateTo("/login");
+        }
+      }
+    },
+    async createTheme(form: Theme) {
+      const token = localStorage.getItem("accessToken");
+
+      try {
+        const res = await $fetch<Theme>(`${apiUrl}/users/themes`, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: form,
+        });
+      } catch (err: unknown) {
+        const error = err as FetchError;
+
+        if (error.status === 401) {
+          const auth = useAuthStore();
+          auth.logout();
+
+          navigateTo("/login");
+        }
+      }
+    },
   },
 });
