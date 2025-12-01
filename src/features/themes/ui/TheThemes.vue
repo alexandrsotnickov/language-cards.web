@@ -14,7 +14,7 @@
 
 <script setup>
 import { onMounted } from "vue";
-import { useThemesStore } from "../../../entities/theme/useThemesStore";
+import { useThemesStore } from "../../../entities/Theme/model/stores/theme";
 import { TheButton } from "@/shared/ui/button";
 
 const themesStore = useThemesStore();

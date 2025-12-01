@@ -1,3 +1,7 @@
+.theme-creation {
+  min-width: 300px;
+  max-width: 500px;
+}
 .theme-creation__title {
   font-size: 45px;
 }
@@ -20,4 +24,8 @@
 
 .theme-creation__button {
   max-width: 150px;
+}
+
+.theme-creation__error {
+  font-size: 10px;
 }

@@ -21,7 +21,7 @@
                   Переименовать
                 </button>
                 <button class="actions-select__dropdown-item" @click="share">
-                  Изменить
+                  Работа с содержимым
                 </button>
                 <button class="actions-select__dropdown-item" @click="remove">
                   Удалить
@@ -43,11 +43,17 @@
               class="theme-creation__input"
               required
             />
-            <TheButton class="theme-creation__button" @click="createTheme"
+            <TheButton class="theme-creation__button" type="submit"
               >Создать тему</TheButton
             >
           </div>
         </form>
+        <p v-if="!response?.success" class="form-error theme-creation__error">
+          {{ response?.validationError }}
+        </p>
+        <p v-if="response?.success">
+          {{ response?.message }}
+        </p>
       </section>
     </div>
   </main>
@@ -58,7 +64,8 @@ import { ref, onMounted, onBeforeUnmount } from "vue";
 import { definePageMeta } from "#imports";
 import TheHeader from "@/widgets/header/ui/TheHeader.vue";
 import TheButton from "~/src/shared/ui/button/TheButton.vue";
-import { useThemesStore } from "@/entities/theme/useThemesStore";
+import { useThemesStore } from "~/src/entities/Theme/model/stores/theme";
+import { useTheme } from "@/entities/Theme/model/useTheme";
 
 const themesStore = useThemesStore();
 
@@ -77,19 +84,25 @@ const form = ref({
   name: "",
 });
 
-const createTheme = () => {
-  themesStore.createTheme(form);
-};
 function toggle(id) {
   openId.value = openId.value === id ? null : id;
 }
 
 const close = (e) => {
   if (!menuRef.value.contains(e.target)) {
-    open.value = false;
+    openId.value = null;
   }
 };
+const { response, submit } = useTheme();
+async function onSubmit() {
+  await submit(form.value);
 
+  if (response.value != null && response.value.success) {
+    form.value = {
+      name: "",
+    };
+  }
+}
 const rename = () => console.log("Rename clicked");
 const share = () => console.log("Share clicked");
 const remove = () => console.log("Delete clicked");

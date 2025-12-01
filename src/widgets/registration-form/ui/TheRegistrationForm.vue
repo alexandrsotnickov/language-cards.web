@@ -25,7 +25,7 @@
           </button>
         </div>
       </form>
-      <p v-if="!response?.success" class="registration-form__error">
+      <p v-if="!response?.success" class="form-error">
         {{ response?.validationError }}
       </p>
       <p v-if="response?.success">
