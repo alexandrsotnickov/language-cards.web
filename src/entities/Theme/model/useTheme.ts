@@ -4,6 +4,9 @@ import { apiUrl } from "~/src/shared/lib/apiUrl";
 import type { FetchError } from "ofetch";
 import type { ApiResponse } from "@/dto/apiResponse";
 import { useAuthStore } from "@/shared/api/stores/useAuthStore";
+import { Api } from "~/src/shared/lib/api";
+import { goToLoginPage } from "./useGoToLoginPage";
+import { ApiErrorHandler } from "~/src/shared/lib/apiErrorHandler";
 
 export function useTheme() {
   const response = ref<ApiResponse<object> | null>(null);
@@ -23,7 +26,6 @@ export function useTheme() {
       const response = data as ApiResponse<ITheme>;
 
       navigateTo(`/themes/${response.data?.id}`);
-      console.log("Я тут");
     } catch (err: unknown) {
       const error = err as FetchError;
 
@@ -35,13 +37,26 @@ export function useTheme() {
       }
 
       if (error.status == 400) {
-        console.log(error.data);
         response.value = error.data as ApiResponse<object>;
+      }
+    }
+  };
+
+  const updateThemeName = async (form: ITheme) => {
+    const route = useRoute();
+    try {
+      const api = new Api();
+      await api.put<ITheme, ITheme>(`themes/${Number(route.params.id)}`, form);
+    } catch (err: unknown) {
+      const errorStatus = ApiErrorHandler.handle(err);
+      if (errorStatus === 401) {
+        goToLoginPage();
       }
     }
   };
   return {
     response,
     submit,
+    updateThemeName,
   };
 }
