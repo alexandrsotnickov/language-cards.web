@@ -1,17 +1,15 @@
 import { BASE_API_URL } from "../config";
-type FetchFn = typeof $fetch;
 
 export class Api {
-  private client: FetchFn;
+  private client;
   constructor(baseURL = BASE_API_URL, isAuth = true) {
     this.client = $fetch.create({
       baseURL,
-      onRequest: ({ options }) => {
-        if (isAuth && options.headers instanceof Headers) {
-          options.headers = options.headers || {};
+      onRequest({ options }) {
+        if (isAuth) {
           options.headers.set(
             "Authorization",
-            `Bearer ${localStorage.getItem("token")}`
+            "Bearer " + localStorage.getItem("accessToken")
           );
         }
       },
@@ -22,10 +20,7 @@ export class Api {
     return this.client<T>(path);
   }
 
-  public put<TResponse, TBody extends object = object>(
-    path: string,
-    body?: TBody
-  ) {
-    return this.client<TResponse>(path, { method: "PUT", body });
+  put<T>(url: string, body?: Record<string, unknown>) {
+    return this.client<T>(url, { method: "PUT", body });
   }
 }

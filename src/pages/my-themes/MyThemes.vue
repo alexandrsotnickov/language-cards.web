@@ -7,7 +7,7 @@
         <div class="my-themes__box">
           <div
             class="my-themes__item"
-            v-for="theme in themesStore.items"
+            v-for="theme in themesStore.subscribedThemes"
             :key="theme.id"
           >
             {{ theme.name }}
@@ -20,7 +20,7 @@
                 <button class="actions-select__dropdown-item" @click="rename">
                   Переименовать
                 </button>
-                <button class="actions-select__dropdown-item" @click="share">
+                <button class="actions-select__dropdown-item" @click="edit">
                   Работа с содержимым
                 </button>
                 <button class="actions-select__dropdown-item" @click="remove">
@@ -66,6 +66,7 @@ import TheHeader from "@/widgets/header/ui/TheHeader.vue";
 import TheButton from "~/src/shared/ui/button/TheButton.vue";
 import { useThemesStore } from "~/src/entities/Theme/model/stores/theme";
 import { useTheme } from "@/entities/Theme/model/useTheme";
+import { navigateTo } from "#app";
 
 const themesStore = useThemesStore();
 
@@ -104,7 +105,7 @@ async function onSubmit() {
   }
 }
 const rename = () => console.log("Rename clicked");
-const share = () => console.log("Share clicked");
+const edit = () => navigateTo(`/themes/${openId.value}`);
 const remove = () => console.log("Delete clicked");
 definePageMeta({
   alias: ["/my-themes"],

@@ -4,9 +4,9 @@ import { apiUrl } from "~/src/shared/lib/apiUrl";
 import type { FetchError } from "ofetch";
 import type { ApiResponse } from "@/dto/apiResponse";
 import { useAuthStore } from "@/shared/api/stores/useAuthStore";
-import { Api } from "~/src/shared/lib/api";
-import { goToLoginPage } from "./useGoToLoginPage";
-import { ApiErrorHandler } from "~/src/shared/lib/apiErrorHandler";
+// import { Api } from "~/src/shared/lib/api";
+// import { goToLoginPage } from "./useGoToLoginPage";
+// import { ApiErrorHandler } from "~/src/shared/lib/apiErrorHandler";
 
 export function useTheme() {
   const response = ref<ApiResponse<object> | null>(null);
@@ -25,7 +25,7 @@ export function useTheme() {
 
       const response = data as ApiResponse<ITheme>;
 
-      navigateTo(`/themes/${response.data?.id}`);
+      navigateTo(`/themes/theme-${response.data?.id}`);
     } catch (err: unknown) {
       const error = err as FetchError;
 
@@ -42,11 +42,11 @@ export function useTheme() {
     }
   };
 
-  const updateThemeName = async (form: ITheme) => {
-    const route = useRoute();
+  const submit = async (form: ITheme) => {
+    // const route = useRoute();
     try {
       const api = new Api();
-      await api.put<ITheme, ITheme>(`themes/${Number(route.params.id)}`, form);
+      // await api.put<ITheme, ITheme>(`themes/${Number(route.params.id)}`, form);
     } catch (err: unknown) {
       const errorStatus = ApiErrorHandler.handle(err);
       if (errorStatus === 401) {
@@ -54,9 +54,10 @@ export function useTheme() {
       }
     }
   };
+
   return {
     response,
     submit,
-    updateThemeName,
+    // updateThemeName,
   };
 }

@@ -9,7 +9,9 @@ import { goToLoginPage } from "../useGoToLoginPage";
 
 export const useThemesStore = defineStore("themesStore", {
   state: () => ({
-    items: [] as ITheme[],
+    themes: [] as ITheme[],
+    subscribedThemes: [] as ITheme[],
+    currentTheme: null as ITheme | null,
   }),
 
   actions: {
@@ -24,7 +26,7 @@ export const useThemesStore = defineStore("themesStore", {
           },
         });
 
-        this.items = res ?? [];
+        this.themes = res ?? [];
       } catch (err: unknown) {
         const error = err as FetchError;
 
@@ -48,7 +50,7 @@ export const useThemesStore = defineStore("themesStore", {
           },
         });
 
-        this.items = res ?? [];
+        this.subscribedThemes = res ?? [];
       } catch (err: unknown) {
         const error = err as FetchError;
 
@@ -65,10 +67,9 @@ export const useThemesStore = defineStore("themesStore", {
       const route = useRoute();
       const api = new Api();
       try {
-        const res = await api.get<ITheme[]>(
-          `themes/${Number(route.params.id)}`
-        );
-        this.items = res ?? [];
+        const res = await api.get<ITheme>(`themes/${Number(route.params.id)}`);
+        this.currentTheme = res as ITheme;
+        console.log(this.currentTheme);
       } catch (err: unknown) {
         const errorStatus = ApiErrorHandler.handle(err);
         if (errorStatus === 401) {

@@ -1,0 +1,31 @@
+.add-card {
+  display: flex;
+  max-width: 645px;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.add-card__item {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  min-width: 100px;
+  flex-grow: 1;
+}
+
+.add-card__label {
+  width: 150px;
+  font-size: 20px;
+}
+
+.add-card__input {
+  flex-grow: 2;
+  border-radius: 7px;
+  font-size: 20px;
+  height: 30px;
+}
+
+.add-card__button {
+  width: 150px;
+  text-align: center;
+}
