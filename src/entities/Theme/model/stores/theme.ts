@@ -5,7 +5,7 @@ import { useAuthStore } from "@/shared/api/stores/useAuthStore";
 import type { FetchError } from "ofetch";
 import { Api } from "~/src/shared/lib/api";
 import { ApiErrorHandler } from "~/src/shared/lib/apiErrorHandler";
-import { goToLoginPage } from "../useGoToLoginPage";
+import { goToLoginPage } from "../../../../shared/lib/useGoToLoginPage";
 
 export const useThemesStore = defineStore("themesStore", {
   state: () => ({
@@ -76,6 +76,10 @@ export const useThemesStore = defineStore("themesStore", {
           goToLoginPage();
         }
       }
+    },
+    setCurrentThemeName(name: string) {
+      if (!this.currentTheme) return;
+      this.currentTheme.name = name;
     },
   },
 });

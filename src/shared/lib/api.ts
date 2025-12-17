@@ -16,11 +16,15 @@ export class Api {
     });
   }
 
-  public get<T>(path: string) {
+  get<T>(path: string) {
     return this.client<T>(path);
   }
 
-  put<T>(url: string, body?: Record<string, unknown>) {
-    return this.client<T>(url, { method: "PUT", body });
+  put<TBody extends object, TResponse>(url: string, body: TBody) {
+    return this.client<TResponse>(url, { method: "PUT", body });
+  }
+
+  post<TBody extends object, TResponse>(url: string, body: TBody) {
+    return this.client<TResponse>(url, { method: "POST", body });
   }
 }
