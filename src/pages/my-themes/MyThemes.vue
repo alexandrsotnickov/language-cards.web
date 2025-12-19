@@ -4,22 +4,20 @@
     <div class="themes__container">
       <section class="my-themes__container">
         <h2 class="my-themes__title">Мои темы</h2>
+        <h3>Нажми на название темы для её изучения</h3>
         <div class="my-themes__box">
           <div
             class="my-themes__item"
             v-for="theme in themesStore.subscribedThemes"
             :key="theme.id"
           >
-            {{ theme.name }}
+            <NuxtLink :to="`/study/${theme.id}`">{{ theme.name }}</NuxtLink>
             <div class="actions-select__box" ref="menuRef">
               <button class="actions-select__btn" @click="toggle(theme.id)">
                 Действия
               </button>
 
               <div v-if="openId === theme.id" class="actions-select__dropdown">
-                <button class="actions-select__dropdown-item" @click="rename">
-                  Переименовать
-                </button>
                 <button class="actions-select__dropdown-item" @click="edit">
                   Работа с содержимым
                 </button>
@@ -104,7 +102,6 @@ async function onSubmit() {
     };
   }
 }
-const rename = () => console.log("Rename clicked");
 const edit = () => navigateTo(`/themes/${openId.value}`);
 const remove = () => console.log("Delete clicked");
 definePageMeta({

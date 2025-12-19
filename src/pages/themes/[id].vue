@@ -25,13 +25,11 @@
       </section>
       <section class="theme-cards">
         <div class="theme-cards__box">
-          <h1>Карточки:</h1>
-          <div
-            class="theme-cards__list"
-            v-for="card in cardsStore.items"
-            :key="card.id"
-          >
-            {{ card.word }}/{{ card.translation }}
+          <h1 class="theme-cards__title">Карточки:</h1>
+          <div class="theme-cards__list">
+            <div v-for="card in cardsStore.items" :key="card.id">
+              {{ card.word }}/{{ card.translation }}
+            </div>
           </div>
         </div>
         <form
@@ -75,12 +73,11 @@
 
 <script setup lang="ts">
 import { onMounted, watch, ref } from "vue";
-import TheHeader from "@/widgets/header/ui/TheHeader.vue";
+
 import TheButton from "@/shared/ui/button/TheButton.vue";
 import { useCardsStore } from "~/src/entities/Card/model/stores/card";
 import { useThemesStore } from "~/src/entities/Theme/model/stores/theme";
 import { useTheme } from "@/entities/Theme/model/useTheme";
-import { useCard } from "~/src/entities/Card/model/useCard";
 import { useRoute } from "vue-router";
 const cardsStore = useCardsStore();
 const themesStore = useThemesStore();
@@ -98,7 +95,7 @@ const addCardForm = ref({
   word: "",
   transcription: "",
   translation: "",
-  themeId: route.params.id,
+  themeId: Number(route.params.id),
 });
 
 watch(
@@ -112,14 +109,13 @@ watch(
 );
 
 const { submitUpdateThemeName } = useTheme();
-const { submitAddCard } = useCard();
 
 async function onSubmitUpdateThemeName() {
   await submitUpdateThemeName(form.value);
 }
 
 async function onSubmitAddCard() {
-  await submitAddCard(addCardForm.value);
+  await cardsStore.createCard(addCardForm.value);
 }
 </script>
 

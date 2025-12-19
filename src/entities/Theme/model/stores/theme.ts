@@ -69,7 +69,6 @@ export const useThemesStore = defineStore("themesStore", {
       try {
         const res = await api.get<ITheme>(`themes/${Number(route.params.id)}`);
         this.currentTheme = res as ITheme;
-        console.log(this.currentTheme);
       } catch (err: unknown) {
         const errorStatus = ApiErrorHandler.handle(err);
         if (errorStatus === 401) {
