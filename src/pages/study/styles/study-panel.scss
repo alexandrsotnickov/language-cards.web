@@ -1,18 +1,62 @@
 .study-panel {
-  height: 100vh;
+  margin-top: 60px;
+  height: calc(100vh - 80px);
 }
 
 .study-panel__container {
   display: grid;
-  grid-template-rows: 9fr 1fr; /* 90% / 10% */
+  grid-template-rows: 8fr 1fr;
+  height: 100%;
+  gap: 4px;
 }
 
 .study-panel__card {
-  border: 3px solid white;
   border-radius: 10px;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  height: 100%;
+}
+
+.study-panel__word {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.study-panel__writing {
+  justify-self: center;
+  align-self: center;
+  font-size: 100px;
+}
+
+.study-panel__transcription {
+  justify-self: center;
+  align-self: center;
+  font-size: 50px;
+  color: grey;
+}
+
+.study-panel__translation {
+  border-top: 1px solid white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 100px;
 }
 
 .study-panel__tools {
+  background-color: white;
   border: 3px solid white;
   border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.study-panel__button {
+  height: 50px;
 }

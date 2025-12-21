@@ -73,7 +73,7 @@
 
 <script setup lang="ts">
 import { onMounted, watch, ref } from "vue";
-
+import TheHeader from "@/widgets/header/ui/TheHeader.vue";
 import TheButton from "@/shared/ui/button/TheButton.vue";
 import { useCardsStore } from "~/src/entities/Card/model/stores/card";
 import { useThemesStore } from "~/src/entities/Theme/model/stores/theme";
