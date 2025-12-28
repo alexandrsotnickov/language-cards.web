@@ -16,8 +16,8 @@ export function useUserCardStatus() {
 
       console.log(responseUserCardStatus.value);
     } catch (err: unknown) {
-      const errorStatus = ApiErrorHandler.handle(err);
-      if (errorStatus === 401) {
+      const error = ApiErrorHandler.handle(err);
+      if (error === 401) {
         goToLoginPage();
       }
     }

@@ -13,6 +13,7 @@ export function useTheme() {
   const response = ref<ApiResponse<object> | null>(null);
   const responseUpdateThemeName = ref<ApiResponse<object> | null>(null);
   const responseRandomCard = ref<ApiResponse<ICard> | null>(null);
+  const statusResponseRandomCard = ref<number>(200);
   const submitCreate = async (form: ITheme) => {
     const token = localStorage.getItem("accessToken");
 
@@ -68,10 +69,9 @@ export function useTheme() {
         `themes/${Number(route.params.id)}/random-card`
       );
     } catch (err: unknown) {
-      const errorStatus = ApiErrorHandler.handle(err);
-      if (errorStatus === 401) {
-        goToLoginPage();
-      }
+      const [status, response] = ApiErrorHandler.handleV2(err);
+      responseRandomCard.value = response as ApiResponse<ICard>;
+      statusResponseRandomCard.value = status;
     }
   };
 
@@ -79,6 +79,7 @@ export function useTheme() {
     response,
     responseUpdateThemeName,
     responseRandomCard,
+    statusResponseRandomCard,
     submitCreate,
     submitUpdateThemeName,
     getRandomCard,

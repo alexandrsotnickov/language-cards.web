@@ -10,6 +10,12 @@
             {{ responseRandomCard.data?.word }}
           </div>
           <div
+            v-if="statusResponseRandomCard == 404"
+            class="study-panel__no-card"
+          >
+            {{ responseRandomCard?.message }}
+          </div>
+          <div
             v-if="responseRandomCard?.success"
             class="study-panel__transcription"
           >
@@ -26,9 +32,15 @@
       <div class="study-panel__tools">
         <TheButton
           @click="showAnswer"
-          v-if="!isShowAnswer"
+          v-if="!isShowAnswer && responseRandomCard?.success"
           class="study-panel__button"
           >Показать ответ</TheButton
+        >
+        <TheButton
+          @click="resetCardStatuses"
+          v-if="statusResponseRandomCard == 404"
+          class="study-panel__button"
+          >Пройти тему заново</TheButton
         >
         <TheButton
           @click="updateCardStatus"
@@ -51,7 +63,8 @@ import { useTheme } from "~/src/entities/Theme/model/useTheme";
 import { ref, onMounted } from "vue";
 import { useUserCardStatus } from "~/src/entities/UserCardStatus/model/useUserCardStatus";
 
-const { responseRandomCard, getRandomCard } = useTheme();
+const { responseRandomCard, statusResponseRandomCard, getRandomCard } =
+  useTheme();
 const { responseUserCardStatus, updateUserCardStatus } = useUserCardStatus();
 let isShowAnswer = ref<boolean>(false);
 
@@ -59,6 +72,7 @@ function showAnswer() {
   isShowAnswer.value = true;
 }
 
+async function resetCardStatuses() {}
 async function updateCardStatus() {
   if (responseRandomCard.value?.data?.id) {
     await updateUserCardStatus({
