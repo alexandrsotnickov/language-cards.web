@@ -1,10 +1,28 @@
-# Nuxt Minimal Starter
+# Language Cards Web
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Language Cards Web — веб-приложение для изучения иностранных языков с помощью карточек, построенное на Nuxt 3.
 
-## Setup
+## Особенности
 
-Make sure to install dependencies:
+- Работа с языковыми карточками
+- Современный интерфейс
+- Интеграция с REST API
+- Масштабируемая архитектура
+
+## Стэк
+
+- Nuxt 3
+- Vue 3
+- TypeScript
+- SCSS
+
+# Запуск проекта
+
+Перейдите на [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) для подробного изучения.
+
+## Установка
+
+Убедитесь в том, что установлены зависимости:
 
 ```bash
 # npm
@@ -22,7 +40,7 @@ bun install
 
 ## Development Server
 
-Start the development server on `http://localhost:3000`:
+Запустите сервер на `http://localhost:3000`:
 
 ```bash
 # npm
@@ -40,7 +58,7 @@ bun run dev
 
 ## Production
 
-Build the application for production:
+Собрать приложение в режиме "продакшн"
 
 ```bash
 # npm
@@ -56,7 +74,7 @@ yarn build
 bun run build
 ```
 
-Locally preview production build:
+Локальный просмотр продакшн-сборки
 
 ```bash
 # npm
@@ -71,5 +89,3 @@ yarn preview
 # bun
 bun run preview
 ```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
