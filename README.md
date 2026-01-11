@@ -18,7 +18,7 @@ Language Cards Web — веб-приложение для изучения ин�
 
 # Запуск проекта
 
-Перейдите на [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) для подробного изучения.
+Перейдите в [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) для подробного изучения.
 
 ## Установка
 
@@ -38,7 +38,7 @@ yarn install
 bun install
 ```
 
-## Development Server
+## Режим разработки
 
 Запустите сервер на `http://localhost:3000`:
 
@@ -56,7 +56,7 @@ yarn dev
 bun run dev
 ```
 
-## Production
+## Продакшн
 
 Собрать приложение в режиме "продакшн"
 
