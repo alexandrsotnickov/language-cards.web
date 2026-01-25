@@ -9,7 +9,7 @@ export class Api {
         if (isAuth) {
           options.headers.set(
             "Authorization",
-            "Bearer " + localStorage.getItem("accessToken")
+            "Bearer " + localStorage.getItem("accessToken"),
           );
         }
       },
@@ -20,11 +20,15 @@ export class Api {
     return this.client<T>(path);
   }
 
-  put<TBody extends object, TResponse>(url: string, body: TBody) {
+  put<TBody extends object, TResponse>(url: string, body: TBody | null) {
     return this.client<TResponse>(url, { method: "PUT", body });
   }
 
-  post<TBody extends object, TResponse>(url: string, body: TBody) {
+  post<TBody extends object, TResponse>(url: string, body: TBody | null) {
     return this.client<TResponse>(url, { method: "POST", body });
+  }
+
+  delete<TResponse>(url: string) {
+    return this.client<TResponse>(url, { method: "DELETE" });
   }
 }

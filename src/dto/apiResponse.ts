@@ -3,4 +3,5 @@ export type ApiResponse<T> = {
   data?: T;
   message?: string;
   validationError?: string;
+  status: number;
 };

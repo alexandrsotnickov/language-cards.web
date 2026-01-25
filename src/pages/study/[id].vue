@@ -10,7 +10,7 @@
             {{ responseRandomCard.data?.word }}
           </div>
           <div
-            v-if="statusResponseRandomCard == 404"
+            v-if="responseRandomCard?.status === 404"
             class="study-panel__no-card"
           >
             {{ responseRandomCard?.message }}
@@ -37,8 +37,8 @@
           >Показать ответ</TheButton
         >
         <TheButton
-          @click="resetCardStatuses"
-          v-if="statusResponseRandomCard == 404"
+          @click="resetCardsStatuses"
+          v-if="responseRandomCard?.status === 404"
           class="study-panel__button"
           >Пройти тему заново</TheButton
         >
@@ -48,7 +48,10 @@
           class="study-panel__button"
           >Верный ответ</TheButton
         >
-        <TheButton v-if="isShowAnswer" class="study-panel__button"
+        <TheButton
+          v-if="isShowAnswer"
+          class="study-panel__button"
+          @click="getNextRandomCard"
           >Ответ неверный</TheButton
         >
       </div>
@@ -62,17 +65,31 @@ import TheButton from "@/shared/ui/button/TheButton.vue";
 import { useTheme } from "~/src/entities/Theme/model/useTheme";
 import { ref, onMounted } from "vue";
 import { useUserCardStatus } from "~/src/entities/UserCardStatus/model/useUserCardStatus";
-
-const { responseRandomCard, statusResponseRandomCard, getRandomCard } =
-  useTheme();
+import { useRoute } from "vue-router";
+import { computed } from "vue";
+const {
+  resetCardStatusesInSubscribedTheme,
+  responseResetUserCardStatuses,
+  responseRandomCard,
+  getRandomCard,
+} = useTheme();
 const { responseUserCardStatus, updateUserCardStatus } = useUserCardStatus();
 let isShowAnswer = ref<boolean>(false);
 
 function showAnswer() {
   isShowAnswer.value = true;
 }
+const route = useRoute();
+const themeId = computed(() => route.params.id as string | undefined);
+async function resetCardsStatuses() {
+  if (themeId.value) {
+    await resetCardStatusesInSubscribedTheme(themeId.value);
+  }
+  if (responseResetUserCardStatuses.value?.success) {
+    getRandomCard();
+  }
+}
 
-async function resetCardStatuses() {}
 async function updateCardStatus() {
   if (responseRandomCard.value?.data?.id) {
     await updateUserCardStatus({
@@ -85,6 +102,11 @@ async function updateCardStatus() {
     isShowAnswer.value = false;
     getRandomCard();
   }
+}
+
+async function getNextRandomCard() {
+  isShowAnswer.value = false;
+  getRandomCard();
 }
 
 onMounted(() => {

@@ -8,13 +8,15 @@ import { Api } from "~/src/shared/lib/api";
 import { goToLoginPage } from "../../../shared/lib/useGoToLoginPage";
 import { ApiErrorHandler } from "~/src/shared/lib/apiErrorHandler";
 import type { ICard } from "../../Card/ICard";
+import type { IThemeName } from "../IThemeName";
 
 export function useTheme() {
   const response = ref<ApiResponse<object> | null>(null);
   const responseUpdateThemeName = ref<ApiResponse<object> | null>(null);
+  const responseResetUserCardStatuses = ref<ApiResponse<object> | null>(null);
   const responseRandomCard = ref<ApiResponse<ICard> | null>(null);
-  const statusResponseRandomCard = ref<number>(200);
-  const submitCreate = async (form: ITheme) => {
+
+  const submitCreate = async (form: IThemeName) => {
     const token = localStorage.getItem("accessToken");
 
     try {
@@ -63,15 +65,27 @@ export function useTheme() {
 
   const getRandomCard = async () => {
     const route = useRoute();
+
     try {
       const api = new Api();
       responseRandomCard.value = await api.get<ApiResponse<ICard>>(
-        `themes/${Number(route.params.id)}/random-card`
+        `themes/${Number(route.params.id)}/random-card`,
       );
     } catch (err: unknown) {
-      const [status, response] = ApiErrorHandler.handleV2(err);
+      const response = ApiErrorHandler.handleV2(err);
       responseRandomCard.value = response as ApiResponse<ICard>;
-      statusResponseRandomCard.value = status;
+    }
+  };
+
+  const resetCardStatusesInSubscribedTheme = async (themeId: string) => {
+    try {
+      const api = new Api();
+      responseResetUserCardStatuses.value = await api.post<
+        ITheme,
+        ApiResponse<object>
+      >(`themes/${themeId}/reset-card-statuses`, null);
+    } catch (err: unknown) {
+      ApiErrorHandler.handleV2(err);
     }
   };
 
@@ -79,9 +93,10 @@ export function useTheme() {
     response,
     responseUpdateThemeName,
     responseRandomCard,
-    statusResponseRandomCard,
     submitCreate,
     submitUpdateThemeName,
     getRandomCard,
+    resetCardStatusesInSubscribedTheme,
+    responseResetUserCardStatuses,
   };
 }

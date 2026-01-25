@@ -6,8 +6,10 @@ import { goToLoginPage } from "~/src/shared/lib/useGoToLoginPage";
 
 export function useUserCardStatus() {
   const responseUserCardStatus = ref<ApiResponse<IUserCardStatus> | null>(null);
+
   const updateUserCardStatus = async (dto: IUserCardStatus) => {
     try {
+      console.log("Я тут");
       const api = new Api();
       responseUserCardStatus.value = await api.post<
         IUserCardStatus,

@@ -21,7 +21,10 @@
                 <button class="actions-select__dropdown-item" @click="edit">
                   Работа с содержимым
                 </button>
-                <button class="actions-select__dropdown-item" @click="remove">
+                <button
+                  class="actions-select__dropdown-item"
+                  @click="remove(theme)"
+                >
                   Удалить
                 </button>
               </div>
@@ -57,14 +60,15 @@
   </main>
 </template>
 
-<script setup>
-import { ref, onMounted, onBeforeUnmount } from "vue";
+<script setup lang="ts">
+import { ref, onMounted, onBeforeUnmount, type Ref } from "vue";
 import { definePageMeta } from "#imports";
 import TheHeader from "@/widgets/header/ui/TheHeader.vue";
 import TheButton from "~/src/shared/ui/button/TheButton.vue";
 import { useThemesStore } from "~/src/entities/Theme/model/stores/theme";
 import { useTheme } from "@/entities/Theme/model/useTheme";
 import { navigateTo } from "#app";
+import type { ITheme } from "~/src/entities/Theme/ITheme";
 
 const themesStore = useThemesStore();
 
@@ -77,33 +81,30 @@ onBeforeUnmount(() => {
   document.removeEventListener("click", close);
 });
 
-const openId = ref(null);
-const menuRef = ref(null);
-const form = ref({
-  name: "",
-});
+const openId: Ref<number | null> = ref(null);
+const menuRef: Ref<HTMLElement | null> = ref(null);
 
-function toggle(id) {
+const form = ref<{ name: string }>({ name: "" });
+
+function toggle(id: number) {
   openId.value = openId.value === id ? null : id;
 }
 
-const close = (e) => {
-  if (!menuRef.value.contains(e.target)) {
+const close = (e: MouseEvent) => {
+  if (menuRef.value && !menuRef.value.contains(e.target as Node)) {
     openId.value = null;
   }
 };
-const { response, submit } = useTheme();
-async function onSubmit() {
-  await submit(form.value);
+const { response, submitCreate } = useTheme();
+async function onSubmit(): Promise<void> {
+  await submitCreate(form.value);
 
-  if (response.value != null && response.value.success) {
-    form.value = {
-      name: "",
-    };
+  if (response.value && response.value.success) {
+    form.value = { name: "" };
   }
 }
 const edit = () => navigateTo(`/themes/${openId.value}`);
-const remove = () => console.log("Delete clicked");
+const remove = (theme: ITheme) => themesStore.unsubscribeTheme(theme);
 definePageMeta({
   alias: ["/my-themes"],
 });
