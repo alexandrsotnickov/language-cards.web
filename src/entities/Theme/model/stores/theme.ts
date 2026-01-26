@@ -26,8 +26,9 @@ export const useThemesStore = defineStore("themesStore", {
             Authorization: `Bearer ${token}`,
           },
         });
+        console.log(res);
 
-        this.themes = res ?? [];
+        this.themes = res.filter((t) => t.name !== "Мои карточки") ?? [];
       } catch (err: unknown) {
         const error = err as FetchError;
 
@@ -50,7 +51,7 @@ export const useThemesStore = defineStore("themesStore", {
             Authorization: `Bearer ${token}`,
           },
         });
-
+        console.log(res);
         this.subscribedThemes = res ?? [];
       } catch (err: unknown) {
         const error = err as FetchError;

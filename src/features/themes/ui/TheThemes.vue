@@ -1,13 +1,13 @@
 <template>
   <div class="themes">
-    <div class="theme" v-for="theme of themesStore.items" :key="theme.id">
+    <div class="theme" v-for="theme of themesStore.themes" :key="theme.id">
       <div class="theme__info">
         <div class="theme__name">
           {{ theme.name }}
         </div>
         <div class="theme__owner">{{ theme.ownerName }}</div>
       </div>
-      <TheButton>Добавить в свои темы</TheButton>
+      <TheButton @click="addToMyTheme">Добавить в свои темы</TheButton>
     </div>
   </div>
 </template>

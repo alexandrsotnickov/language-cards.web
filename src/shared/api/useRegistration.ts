@@ -15,7 +15,6 @@ export function useRegistration() {
       });
 
       response.value = data as ApiResponse<object>;
-      console.log(response.value);
     } catch (err) {
       const fetchError = err as FetchError;
 

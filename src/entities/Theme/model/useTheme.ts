@@ -8,7 +8,6 @@ import { Api } from "~/src/shared/lib/api";
 import { goToLoginPage } from "../../../shared/lib/useGoToLoginPage";
 import { ApiErrorHandler } from "~/src/shared/lib/apiErrorHandler";
 import type { ICard } from "../../Card/ICard";
-import type { IThemeName } from "../IThemeName";
 
 export function useTheme() {
   const response = ref<ApiResponse<object> | null>(null);
@@ -16,7 +15,7 @@ export function useTheme() {
   const responseResetUserCardStatuses = ref<ApiResponse<object> | null>(null);
   const responseRandomCard = ref<ApiResponse<ICard> | null>(null);
 
-  const submitCreate = async (form: IThemeName) => {
+  const createTheme = async (themeName: string) => {
     const token = localStorage.getItem("accessToken");
 
     try {
@@ -25,7 +24,7 @@ export function useTheme() {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        body: form,
+        body: { name: themeName },
       });
 
       const response = data as ApiResponse<ITheme>;
@@ -93,7 +92,7 @@ export function useTheme() {
     response,
     responseUpdateThemeName,
     responseRandomCard,
-    submitCreate,
+    createTheme,
     submitUpdateThemeName,
     getRandomCard,
     resetCardStatusesInSubscribedTheme,

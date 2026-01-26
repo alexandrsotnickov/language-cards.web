@@ -95,9 +95,9 @@ const close = (e: MouseEvent) => {
     openId.value = null;
   }
 };
-const { response, submitCreate } = useTheme();
+const { response, createTheme } = useTheme();
 async function onSubmit(): Promise<void> {
-  await submitCreate(form.value);
+  await createTheme(form.value.name);
 
   if (response.value && response.value.success) {
     form.value = { name: "" };
