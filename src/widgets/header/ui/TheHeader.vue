@@ -3,7 +3,7 @@
     <div class="header__container">
       <nav class="header__nav">
         <div class="nav__menu">
-          <a href="/" class="header__logo" aria-label="LanguageCards"
+          <a href="/my-themes" class="header__logo" aria-label="LanguageCards"
             ><Logo
           /></a>
           <ul v-if="auth.userName" class="header__menu">
@@ -18,7 +18,7 @@
         <div class="header__account">
           <ul v-if="!auth.userName" class="header__menu">
             <li class="header__menu-item">
-              <NuxtLink to="/login">Войти</NuxtLink>
+              <NuxtLink to="/">Войти</NuxtLink>
             </li>
             <li class="header__menu-item">
               <NuxtLink to="/registration">Регистрация</NuxtLink>
@@ -34,7 +34,9 @@
         </div>
       </nav>
       <div class="header__mobile">
-        <a href="/" class="header__logo" aria-label="Киберия"><Logo /></a>
+        <a href="/my-themes" class="header__logo" aria-label="Киберия"
+          ><Logo
+        /></a>
         <div class="burger" :class="{ active: isActive }">
           <button
             class="burger__button"
@@ -58,7 +60,7 @@
             <div class="burger__menu">
               <p><NuxtLink to="/my-themes">Мои темы</NuxtLink></p>
               <p><NuxtLink to="/themes-search">Поиск тем</NuxtLink></p>
-              <p><NuxtLink to="/login">Войти</NuxtLink></p>
+              <p><NuxtLink to="/">Войти</NuxtLink></p>
               <p><NuxtLink to="/registration">Регистрация</NuxtLink></p>
             </div>
 
@@ -91,7 +93,7 @@ const auth = useAuthStore();
 
 const logout = () => {
   auth.logout();
-  navigateTo("/login");
+  navigateTo("/");
 };
 
 const isActive = ref(false);

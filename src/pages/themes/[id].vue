@@ -105,13 +105,13 @@ watch(
       form.value.name = theme.name;
     }
   },
-  { immediate: true }
+  { immediate: true },
 );
 
 const { submitUpdateThemeName } = useTheme();
 
 async function onSubmitUpdateThemeName() {
-  await submitUpdateThemeName(form.value);
+  await submitUpdateThemeName(form.value.name);
 }
 
 async function onSubmitAddCard() {

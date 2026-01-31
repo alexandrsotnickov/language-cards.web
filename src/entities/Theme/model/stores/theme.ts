@@ -36,7 +36,7 @@ export const useThemesStore = defineStore("themesStore", {
           const auth = useAuthStore();
           auth.logout();
 
-          navigateTo("/login");
+          navigateTo("/");
         }
       }
     },
@@ -60,7 +60,7 @@ export const useThemesStore = defineStore("themesStore", {
           const auth = useAuthStore();
           auth.logout();
 
-          navigateTo("/login");
+          navigateTo("/");
         }
       }
     },
@@ -79,13 +79,27 @@ export const useThemesStore = defineStore("themesStore", {
       }
     },
 
+    async subscribeTheme(theme: ITheme) {
+      try {
+        const api = new Api();
+        console.log(theme);
+        await api.put<ITheme, ApiResponse<ITheme>>(`users/subscribe`, theme);
+        this.subscribedThemes.push(theme);
+      } catch (err: unknown) {
+        ApiErrorHandler.handleV2(err);
+      }
+    },
+
     async unsubscribeTheme(theme: ITheme) {
       try {
         const api = new Api();
         console.log(theme);
         await api.put<ITheme, ApiResponse<ITheme>>(`users/unsubscribe`, theme);
 
-        this.themes = this.themes.filter((theme) => theme.id !== theme.id);
+        this.subscribedThemes = this.subscribedThemes.filter(
+          (t) => t.id !== theme.id,
+        );
+
         if (theme.id) {
           this.deleteTheme(theme.id);
         }
@@ -105,6 +119,9 @@ export const useThemesStore = defineStore("themesStore", {
     setCurrentThemeName(name: string) {
       if (!this.currentTheme) return;
       this.currentTheme.name = name;
+    },
+    isSubscribed(theme: ITheme) {
+      return this.subscribedThemes.some((t) => t.id === theme.id);
     },
   },
 });

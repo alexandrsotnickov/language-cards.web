@@ -4,5 +4,5 @@ export function goToLoginPage() {
   const auth = useAuthStore();
   auth.logout();
 
-  navigateTo("/login");
+  navigateTo("/");
 }

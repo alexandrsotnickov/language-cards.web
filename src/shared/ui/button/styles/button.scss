@@ -5,4 +5,11 @@
   color: $color-font-2;
   padding: 7px 15px;
   font-weight: 600;
+
+  &:hover {
+    background: $background-button-hover-1;
+  }
+  &:active {
+    background: $background-button-active-1;
+  }
 }

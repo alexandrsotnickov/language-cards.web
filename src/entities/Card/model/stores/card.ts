@@ -17,7 +17,7 @@ export const useCardsStore = defineStore("cardsStore", {
       const api = new Api();
       try {
         const res = await api.get<ICard[]>(
-          `themes/${Number(route.params.id)}/cards`
+          `themes/${Number(route.params.id)}/cards`,
         );
 
         this.items = res ?? [];
@@ -36,7 +36,7 @@ export const useCardsStore = defineStore("cardsStore", {
         const api = new Api();
         const response = await api.post<ICard, ApiResponse<ICard>>(
           `cards/create`,
-          cardDto
+          cardDto,
         );
         const card = response.data as ICard;
         this.items.push(card);
@@ -51,7 +51,7 @@ export const useCardsStore = defineStore("cardsStore", {
       const auth = useAuthStore();
       auth.logout();
 
-      navigateTo("/login");
+      navigateTo("/");
     },
   },
 });

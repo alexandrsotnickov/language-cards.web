@@ -9,7 +9,6 @@ export function useUserCardStatus() {
 
   const updateUserCardStatus = async (dto: IUserCardStatus) => {
     try {
-      console.log("Я тут");
       const api = new Api();
       responseUserCardStatus.value = await api.post<
         IUserCardStatus,

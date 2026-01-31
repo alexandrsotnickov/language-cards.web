@@ -11,14 +11,23 @@
             v-for="theme in themesStore.subscribedThemes"
             :key="theme.id"
           >
-            <NuxtLink :to="`/study/${theme.id}`">{{ theme.name }}</NuxtLink>
+            <div class="my-themes__item-name">
+              <NuxtLink :to="`/study/${theme.id}`">{{ theme.name }}</NuxtLink>
+              <div class="my-themes__item-name-owner">
+                {{ theme.ownerName }}
+              </div>
+            </div>
             <div class="actions-select__box" ref="menuRef">
               <button class="actions-select__btn" @click="toggle(theme.id)">
                 Действия
               </button>
 
               <div v-if="openId === theme.id" class="actions-select__dropdown">
-                <button class="actions-select__dropdown-item" @click="edit">
+                <button
+                  v-if="isOwnerTheme(theme)"
+                  class="actions-select__dropdown-item"
+                  @click="edit"
+                >
                   Работа с содержимым
                 </button>
                 <button
@@ -69,8 +78,13 @@ import { useThemesStore } from "~/src/entities/Theme/model/stores/theme";
 import { useTheme } from "@/entities/Theme/model/useTheme";
 import { navigateTo } from "#app";
 import type { ITheme } from "~/src/entities/Theme/ITheme";
+import { useAuthStore } from "~/src/shared/api/stores/useAuthStore";
 
 const themesStore = useThemesStore();
+const auth = useAuthStore();
+const isOwnerTheme = (theme: ITheme) => {
+  return auth.userName === theme.ownerName;
+};
 
 onMounted(() => {
   themesStore.getSubscribedThemes();

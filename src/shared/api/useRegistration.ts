@@ -20,7 +20,6 @@ export function useRegistration() {
 
       if (fetchError.status == 400) {
         response.value = fetchError.data as ApiResponse<object>;
-        console.log(fetchError.data);
       }
     }
   };

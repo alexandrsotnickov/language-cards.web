@@ -11,7 +11,7 @@ export function useUser() {
       console.log(theme);
       await api.put<ITheme, ApiResponse<ITheme>>(`users/subscribe`, theme);
     } catch (err: unknown) {
-      console.log(ApiErrorHandler.handleV2(err));
+      ApiErrorHandler.handleV2(err);
     }
   };
   return {

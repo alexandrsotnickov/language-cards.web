@@ -56,7 +56,7 @@ const handleLogin = async () => {
     await authStore.login(user.value);
     message.value = "Вы успешно вошли!";
     isError.value = false;
-    await navigateTo("/");
+    await navigateTo("/my-themes");
   } catch (err: string | unknown) {
     message.value = err as string;
     isError.value = true;

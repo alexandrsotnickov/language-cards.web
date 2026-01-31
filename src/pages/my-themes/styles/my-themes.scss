@@ -28,4 +28,13 @@
   display: flex;
   justify-content: space-between;
   color: $color-font-2;
+  &-name {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    &-owner {
+      font-size: 10px;
+      font-style: italic;
+    }
+  }
 }

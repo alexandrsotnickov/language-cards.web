@@ -37,7 +37,7 @@ export function useTheme() {
         const auth = useAuthStore();
         auth.logout();
 
-        navigateTo("/login");
+        navigateTo("/");
       }
 
       if (error.status == 400) {
@@ -46,14 +46,14 @@ export function useTheme() {
     }
   };
 
-  const submitUpdateThemeName = async (form: ITheme) => {
+  const submitUpdateThemeName = async (themeName: string) => {
     const route = useRoute();
     try {
       const api = new Api();
       responseUpdateThemeName.value = await api.put<
-        ITheme,
+        object,
         ApiResponse<ITheme>
-      >(`themes/${Number(route.params.id)}`, form);
+      >(`themes/${Number(route.params.id)}`, { name: themeName });
     } catch (err: unknown) {
       const errorStatus = ApiErrorHandler.handle(err);
       if (errorStatus === 401) {
