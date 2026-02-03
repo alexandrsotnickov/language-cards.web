@@ -29,15 +29,15 @@ export function useTheme() {
 
       const response = data as ApiResponse<ITheme>;
 
-      navigateTo(`/themes/theme-${response.data?.id}`);
+      navigateTo(`/themes/${response.data?.id}`);
     } catch (err: unknown) {
       const error = err as FetchError;
 
       if (error.status === 401) {
         const auth = useAuthStore();
-        auth.logout();
+        auth.restore();
 
-        navigateTo("/");
+        // navigateTo("/");
       }
 
       if (error.status == 400) {

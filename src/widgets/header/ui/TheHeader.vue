@@ -3,9 +3,21 @@
     <div class="header__container">
       <nav class="header__nav">
         <div class="nav__menu">
-          <a href="/my-themes" class="header__logo" aria-label="LanguageCards"
+          <a
+            v-if="!auth.isAuthorized"
+            href="/"
+            class="header__logo"
+            aria-label="LanguageCards"
             ><Logo
           /></a>
+          <a
+            v-else
+            href="/my-themes"
+            class="header__logo"
+            aria-label="LanguageCards"
+            ><Logo
+          /></a>
+
           <ul v-if="auth.userName" class="header__menu">
             <li class="header__menu-item">
               <NuxtLink to="/my-themes">Мои темы</NuxtLink>

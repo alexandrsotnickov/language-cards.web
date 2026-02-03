@@ -14,7 +14,9 @@ export const useThemesStore = defineStore("themesStore", {
     subscribedThemes: [] as ITheme[],
     currentTheme: null as ITheme | null,
   }),
-
+  getters: {
+    isEmptySubscribedThemes: (state) => state.subscribedThemes.length === 0,
+  },
   actions: {
     async getAllThemes() {
       const token = localStorage.getItem("accessToken");
@@ -34,9 +36,7 @@ export const useThemesStore = defineStore("themesStore", {
 
         if (error.status === 401) {
           const auth = useAuthStore();
-          auth.logout();
-
-          navigateTo("/");
+          auth.restore();
         }
       }
     },
@@ -58,18 +58,17 @@ export const useThemesStore = defineStore("themesStore", {
 
         if (error.status === 401) {
           const auth = useAuthStore();
-          auth.logout();
+          auth.restore();
 
-          navigateTo("/");
+          // navigateTo("/");
         }
       }
     },
 
-    async getThemeById() {
-      const route = useRoute();
+    async getThemeById(id: number) {
       const api = new Api();
       try {
-        const res = await api.get<ITheme>(`themes/${Number(route.params.id)}`);
+        const res = await api.get<ITheme>(`themes/${id}`);
         this.currentTheme = res as ITheme;
       } catch (err: unknown) {
         const errorStatus = ApiErrorHandler.handle(err);

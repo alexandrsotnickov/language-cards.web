@@ -1,5 +1,8 @@
 .themes {
-  display: f;
   color: $color-font-2;
+  display: flex;
   flex-direction: column;
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto;
 }

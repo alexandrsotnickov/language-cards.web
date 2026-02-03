@@ -3,7 +3,7 @@
   <main class="page-content">
     <section>
       <h1 class="themes-search__title">Темы карточек от пользователей:</h1>
-      <div class="themes-search__box"><TheThemes /></div>
+      <TheThemes />
     </section>
   </main>
 </template>

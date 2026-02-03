@@ -28,7 +28,7 @@
 .study-panel__writing {
   justify-self: center;
   align-self: center;
-  font-size: 100px;
+  font-size: clamp(23px, 4vw, 100px);
 }
 
 .study-panel__transcription {
@@ -44,7 +44,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-size: 100px;
+  font-size: clamp(23px, 4vw, 100px);
 }
 
 .study-panel__tools {

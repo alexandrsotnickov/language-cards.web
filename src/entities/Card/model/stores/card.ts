@@ -10,15 +10,14 @@ export const useCardsStore = defineStore("cardsStore", {
   state: () => ({
     items: [] as ICard[],
   }),
+  getters: {
+    isEmpty: (state) => state.items.length === 0,
+  },
   actions: {
-    async getThemeCards() {
-      const route = useRoute();
-
+    async getThemeCards(themeId: number) {
       const api = new Api();
       try {
-        const res = await api.get<ICard[]>(
-          `themes/${Number(route.params.id)}/cards`,
-        );
+        const res = await api.get<ICard[]>(`themes/${themeId}/cards`);
 
         this.items = res ?? [];
         console.log(this.items);
@@ -31,16 +30,18 @@ export const useCardsStore = defineStore("cardsStore", {
       }
     },
 
-    async createCard(cardDto: ICard) {
+    async createCard(cardDto: object) {
       try {
+        console.log(cardDto);
         const api = new Api();
-        const response = await api.post<ICard, ApiResponse<ICard>>(
+        const response = await api.post<object, ApiResponse<ICard>>(
           `cards/create`,
           cardDto,
         );
         const card = response.data as ICard;
         this.items.push(card);
       } catch (err: unknown) {
+        console.log(err);
         const errorStatus = ApiErrorHandler.handle(err);
         if (errorStatus === 401) {
           goToLoginPage();
@@ -49,9 +50,19 @@ export const useCardsStore = defineStore("cardsStore", {
     },
     goToLoginPage() {
       const auth = useAuthStore();
-      auth.logout();
+      auth.restore();
 
-      navigateTo("/");
+      //navigateTo("/");
+    },
+
+    async deleteCard(cardId: number) {
+      try {
+        const api = new Api();
+        await api.delete<ApiResponse<object>>(`cards/${cardId}`);
+        this.items = this.items.filter((t) => t.id !== cardId);
+      } catch (err: unknown) {
+        ApiErrorHandler.handleV2(err);
+      }
     },
   },
 });

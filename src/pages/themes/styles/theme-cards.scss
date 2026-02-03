@@ -14,4 +14,26 @@
   border: 3px solid white;
   border-radius: 10px;
   max-width: 600px;
+
+  &-item {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    &-delete {
+      color: darkred;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      cursor: pointer;
+
+      &:hover {
+        color: red;
+      }
+
+      &:active {
+        color: indianred;
+      }
+    }
+  }
 }

@@ -26,11 +26,22 @@
       <section class="theme-cards">
         <div class="theme-cards__box">
           <h1 class="theme-cards__title">Карточки:</h1>
-          <div class="theme-cards__list">
-            <div v-for="card in cardsStore.items" :key="card.id">
+          <div v-if="!cardsStore.isEmpty" class="theme-cards__list">
+            <div
+              class="theme-cards__list-item"
+              v-for="card in cardsStore.items"
+              :key="card.id"
+            >
               {{ card.word }}/{{ card.translation }}
+              <div
+                class="theme-cards__list-item-delete"
+                @click="removeCard(card.id)"
+              >
+                X
+              </div>
             </div>
           </div>
+          <div v-else class="theme-cards__list">Карточек пока еще нет</div>
         </div>
         <form
           novalidate
@@ -82,20 +93,24 @@ import { useRoute } from "vue-router";
 const cardsStore = useCardsStore();
 const themesStore = useThemesStore();
 
+const themeId = Number(useRoute().params.id);
+
 onMounted(() => {
-  cardsStore.getThemeCards();
-  themesStore.getThemeById();
+  cardsStore.getThemeCards(themeId);
+
+  themesStore.getThemeById(themeId);
 });
 
+const removeCard = (cardId: number) => cardsStore.deleteCard(cardId);
 const form = ref({
-  name: "",
+  name: themesStore.currentTheme?.name,
 });
-const route = useRoute();
+
 const addCardForm = ref({
   word: "",
   transcription: "",
   translation: "",
-  themeId: Number(route.params.id),
+  themeId: themeId,
 });
 
 watch(
@@ -111,10 +126,14 @@ watch(
 const { submitUpdateThemeName } = useTheme();
 
 async function onSubmitUpdateThemeName() {
-  await submitUpdateThemeName(form.value.name);
+  if (form.value.name) {
+    await submitUpdateThemeName(form.value.name);
+  }
 }
 
 async function onSubmitAddCard() {
+  if (!addCardForm.value.themeId) return;
+
   await cardsStore.createCard(addCardForm.value);
 }
 </script>

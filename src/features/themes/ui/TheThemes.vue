@@ -1,5 +1,6 @@
 <template>
   <div class="themes">
+    <!-- <div class="themes__container"> -->
     <div class="theme" v-for="theme of themesStore.themes" :key="theme.id">
       <div class="theme__info">
         <div class="theme__name">
@@ -18,6 +19,7 @@
       >
     </div>
   </div>
+  <!-- </div> -->
 </template>
 
 <script setup lang="ts">

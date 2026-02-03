@@ -11,13 +11,27 @@
   margin: 0 10px;
 }
 
+.my-themes__action {
+  font-size: 18px;
+  text-align: center;
+}
+
 .my-themes__box {
-  max-height: 400px;
+  height: 400px;
   overflow-y: auto;
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
   gap: 2px;
+  border: 3px solid white;
+  border-radius: 10px;
+
+  &--empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+  }
 }
 .my-themes__item {
   min-height: 50px;

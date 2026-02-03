@@ -4,8 +4,10 @@
     <div class="themes__container">
       <section class="my-themes__container">
         <h2 class="my-themes__title">Мои темы</h2>
-        <h3>Нажми на название темы для её изучения</h3>
-        <div class="my-themes__box">
+        <h3 class="my-themes__action">
+          Нажми на название темы для её изучения
+        </h3>
+        <div v-if="!themesStore.isEmptySubscribedThemes" class="my-themes__box">
           <div
             class="my-themes__item"
             v-for="theme in themesStore.subscribedThemes"
@@ -17,8 +19,11 @@
                 {{ theme.ownerName }}
               </div>
             </div>
-            <div class="actions-select__box" ref="menuRef">
-              <button class="actions-select__btn" @click="toggle(theme.id)">
+            <div class="actions-select__box">
+              <button
+                class="actions-select__btn"
+                @click.stop="toggle(theme.id)"
+              >
                 Действия
               </button>
 
@@ -39,6 +44,9 @@
               </div>
             </div>
           </div>
+        </div>
+        <div v-else class="my-themes__box my-themes__box--empty">
+          Здесь пока ещё нет тем
         </div>
       </section>
 
@@ -96,7 +104,6 @@ onBeforeUnmount(() => {
 });
 
 const openId: Ref<number | null> = ref(null);
-const menuRef: Ref<HTMLElement | null> = ref(null);
 
 const form = ref<{ name: string }>({ name: "" });
 
@@ -105,7 +112,14 @@ function toggle(id: number) {
 }
 
 const close = (e: MouseEvent) => {
-  if (menuRef.value && !menuRef.value.contains(e.target as Node)) {
+  const dropdowns = document.querySelectorAll(".actions-select__dropdown");
+
+  let clickedInside = false;
+  dropdowns.forEach((dropdown) => {
+    if (dropdown.contains(e.target as Node)) clickedInside = true;
+  });
+
+  if (!clickedInside) {
     openId.value = null;
   }
 };

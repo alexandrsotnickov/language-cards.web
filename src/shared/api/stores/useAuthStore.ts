@@ -10,7 +10,12 @@ export const useAuthStore = defineStore("auth", {
     accessToken: null as string | null,
     userName: null as string | null,
   }),
-
+  getters: {
+    isAuthorized: (state) => Boolean(state.accessToken),
+    isUnauthorized(): boolean {
+      return !this.isAuthorized;
+    },
+  },
   actions: {
     async login(user: User) {
       const response = ref<ApiResponse<object> | null>(null);
@@ -23,6 +28,7 @@ export const useAuthStore = defineStore("auth", {
 
         this.accessToken = data.accessToken;
         this.userName = data.userName;
+        console.log(this.isAuthorized);
 
         if (import.meta.client) {
           localStorage.setItem("accessToken", this.accessToken!);
@@ -44,6 +50,8 @@ export const useAuthStore = defineStore("auth", {
     logout() {
       this.accessToken = null;
       this.userName = null;
+      console.log(this.isAuthorized);
+
       if (import.meta.client) {
         localStorage.removeItem("accessToken");
         localStorage.removeItem("userName");
@@ -55,8 +63,9 @@ export const useAuthStore = defineStore("auth", {
         const token = localStorage.getItem("accessToken");
         const user = localStorage.getItem("userName");
 
-        if (token) this.accessToken = token;
-        if (user) this.userName = JSON.parse(user);
+        this.accessToken = token;
+        this.userName = user ? JSON.parse(user) : null;
+        console.log(this.isAuthorized);
       }
     },
   },
